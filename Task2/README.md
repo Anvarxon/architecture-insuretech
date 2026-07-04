@@ -15,7 +15,7 @@ kubectl apply -f Task2/service.yaml
 minikube service scaletestapp --url
 ```
 
-## Часть 1: HPA по memory
+## Часть 1: HPA по памяти
 
 ```powershell
 kubectl apply -f Task2/hpa-memory.yaml
@@ -44,7 +44,7 @@ helm install prometheus prometheus-community/prometheus -n monitoring `
 helm install prometheus-adapter prometheus-community/prometheus-adapter -n monitoring -f Task2/prometheus-adapter-values.yaml
 ```
 
-Перед применением `hpa-rps.yaml` удалите HPA по memory, чтобы два HPA не управляли одним Deployment одновременно.
+Перед применением `hpa-rps.yaml` удалите HPA по памяти, чтобы два HPA не управляли одним объектом Deployment одновременно.
 
 ```powershell
 kubectl delete hpa scaletestapp-memory

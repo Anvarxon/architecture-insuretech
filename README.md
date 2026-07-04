@@ -1,12 +1,24 @@
-# Architecture InsureTech
+# Архитектура InsureTech
 
 Решения по проекту InsureTech разложены по директориям `Task1` - `Task6`.
 
 ## Состав
 
-- `Task1` - технологическая архитектура to-be в draw.io.
-- `Task2` - Kubernetes-манифесты, HPA, Prometheus adapter, Locust и проверочный лог окружения.
-- `Task3` - анализ рисков и C4 container diagram для перехода на Event-Driven архитектуру.
+- `Task1` - целевая технологическая архитектура в формате draw.io.
+- `Task2` - манифесты Kubernetes, HPA, адаптер Prometheus, Locust и подтверждающие логи со скриншотами.
+- `Task3` - анализ рисков и контейнерная диаграмма C4 для перехода на событийную архитектуру.
 - `Task4` - C4-схема для продажи ОСАГО онлайн.
-- `Task5` - GraphQL-схема сервиса `client-info`.
-- `Task6` - конфигурация Nginx с Rate Limiting и HTTP 429.
+- `Task5` - схема GraphQL сервиса `client-info`.
+- `Task6` - конфигурация Nginx с ограничением частоты запросов и HTTP 429.
+
+## Локальная проверка инструментов
+
+Установлены:
+
+- Minikube `v1.38.1`
+- kubectl `v1.36.2`
+- Python `3.12.10`
+- pip `25.0.1`
+- Locust `2.44.4`
+
+Minikube успешно запущен через Docker-драйвер. Подтверждения масштабирования и сбора метрик находятся в директории `Task2`.
