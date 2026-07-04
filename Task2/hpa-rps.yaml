@@ -16,7 +16,7 @@ spec:
           name: http_requests_per_second
         target:
           type: AverageValue
-          averageValue: "5"
+          averageValue: "1"
   behavior:
     scaleUp:
       stabilizationWindowSeconds: 0

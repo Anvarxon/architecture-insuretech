@@ -13,6 +13,10 @@ spec:
     metadata:
       labels:
         app: scaletestapp
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/port: "8080"
     spec:
       containers:
         - name: scaletestapp
@@ -24,7 +28,7 @@ spec:
           resources:
             requests:
               cpu: 50m
-              memory: 20Mi
+              memory: 1Mi
             limits:
               cpu: 500m
               memory: 30Mi
