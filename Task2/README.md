@@ -27,7 +27,6 @@ kubectl get deploy scaletestapp -w
 Подтверждение масштабирования:
 
 - `hpa-memory-scaling.log`
-- `task-2-part-1-screenshot-hpa-memory-scaling.png`
 - `task-2-part-1-screenshot-hpa-memory-scaling.svg`
 
 ## Часть 2: Prometheus и HPA по RPS
@@ -72,7 +71,5 @@ sum(rate(http_requests_total[5m])) by (namespace,pod)
 
 - `prometheus-metrics.log`
 - `hpa-rps-scaling.log`
-- `task-2-part-2-screenshot-prometheus-metrics.png`
 - `task-2-part-2-screenshot-prometheus-metrics.svg`
-- `task-2-part-2-screenshot-hpa-rps-scaling.png`
 - `task-2-part-2-screenshot-hpa-rps-scaling.svg`
