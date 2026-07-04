@@ -1,0 +1,60 @@
+﻿=== Task2 Part1: HPA by memory ===
+Command: kubectl get hpa scaletestapp-memory
+NAME                  REFERENCE                 TARGETS            MINPODS   MAXPODS   REPLICAS   AGE
+scaletestapp-memory   Deployment/scaletestapp   memory: 184%/80%   1         10        10         5m6s
+
+Command: kubectl get deployment scaletestapp
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+scaletestapp   10/10   10           10          5m49s
+
+Command: kubectl get pods -o wide
+NAME                            READY   STATUS    RESTARTS   AGE     IP            NODE       NOMINATED NODE   READINESS GATES
+scaletestapp-6fcf4f65b5-499jx   1/1     Running   0          82s     10.244.0.9    minikube   <none>           <none>
+scaletestapp-6fcf4f65b5-5jbnc   1/1     Running   0          82s     10.244.0.11   minikube   <none>           <none>
+scaletestapp-6fcf4f65b5-5lqdk   1/1     Running   0          2m22s   10.244.0.8    minikube   <none>           <none>
+scaletestapp-6fcf4f65b5-fnhgk   1/1     Running   0          21s     10.244.0.15   minikube   <none>           <none>
+scaletestapp-6fcf4f65b5-gfb7s   1/1     Running   0          21s     10.244.0.13   minikube   <none>           <none>
+scaletestapp-6fcf4f65b5-jbqgj   1/1     Running   0          2m53s   10.244.0.6    minikube   <none>           <none>
+scaletestapp-6fcf4f65b5-kfhnl   1/1     Running   0          82s     10.244.0.12   minikube   <none>           <none>
+scaletestapp-6fcf4f65b5-l5srf   1/1     Running   0          2m22s   10.244.0.7    minikube   <none>           <none>
+scaletestapp-6fcf4f65b5-lp8rv   1/1     Running   0          82s     10.244.0.10   minikube   <none>           <none>
+scaletestapp-6fcf4f65b5-sztx4   1/1     Running   0          21s     10.244.0.14   minikube   <none>           <none>
+
+Command: kubectl describe hpa scaletestapp-memory
+Name:                                                     scaletestapp-memory
+Namespace:                                                default
+Labels:                                                   <none>
+Annotations:                                              <none>
+CreationTimestamp:                                        Sat, 04 Jul 2026 12:29:40 +0500
+Reference:                                                Deployment/scaletestapp
+Metrics:                                                  ( current / target )
+  resource memory on pods  (as a percentage of request):  184% (1936822857m) / 80%
+Min replicas:                                             1
+Max replicas:                                             10
+Behavior:
+  Scale Up:
+    Stabilization Window: 0 seconds
+    Select Policy: Max
+    Policies:
+      - Type: Percent  Value: 100  Period: 60 seconds
+      - Type: Pods     Value: 4    Period: 60 seconds
+  Scale Down:
+    Stabilization Window: 300 seconds
+    Select Policy: Max
+    Policies:
+      - Type: Percent  Value: 50  Period: 60 seconds
+Deployment pods:       10 current / 10 desired
+Conditions:
+  Type            Status  Reason            Message
+  ----            ------  ------            -------
+  AbleToScale     True    ReadyForNewScale  recommended size matches current size
+  ScalingActive   True    ValidMetricFound  the HPA was able to successfully calculate a replica count from memory resource utilization (percentage of request)
+  ScalingLimited  True    TooManyReplicas   the desired replica count is more than the maximum replica count
+Events:
+  Type     Reason                        Age                    From                       Message
+  ----     ------                        ----                   ----                       -------
+  Warning  FailedGetResourceMetric       2m37s (x3 over 4m52s)  horizontal-pod-autoscaler  failed to get memory utilization: unable to get metrics for resource memory: no metrics returned from resource metrics API
+  Warning  FailedComputeMetricsReplicas  2m37s (x3 over 4m52s)  horizontal-pod-autoscaler  invalid metrics (1 invalid out of 1), first error is: failed to get memory resource metric value: failed to get memory utilization: unable to get metrics for resource memory: no metrics returned from resource metrics API
+  Normal   SuccessfulRescale             2m22s                  horizontal-pod-autoscaler  New size: 3; reason: memory resource utilization (percentage of request) above target
+  Normal   SuccessfulRescale             82s                    horizontal-pod-autoscaler  New size: 7; reason: memory resource utilization (percentage of request) above target
+  Normal   SuccessfulRescale             21s                    horizontal-pod-autoscaler  New size: 10; reason: memory resource utilization (percentage of request) above target
