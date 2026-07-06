@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="730" viewBox="0 0 1500 730">
+  <rect width="100%" height="100%" fill="#0d1117"/>
+  <rect width="100%" height="54" fill="#161b22"/>
+  <text x="24" y="34" fill="#f0f6fc" font-family="Consolas, monospace" font-size="22" font-weight="700">Task2 Part2 - HPA RPS autoscaling evidence</text>
+  <text x="24" y="70" fill="#d0d7de" font-family="Consolas, monospace" font-size="15">Timestamp: 2026-07-04 13:36:53 +05:00</text>
+<text x="24" y="92" fill="#79c0ff" font-family="Consolas, monospace" font-size="15">Command: kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1</text>
+<text x="24" y="114" fill="#d0d7de" font-family="Consolas, monospace" font-size="15">{&quot;kind&quot;:&quot;APIResourceList&quot;,&quot;apiVersion&quot;:&quot;v1&quot;,&quot;groupVersion&quot;:&quot;custom.metrics.k8s.io/v1beta1&quot;,&quot;resources&quot;:[{&quot;name&quot;:&quot;pods/http_requests_per_second&quot;,&quot;singu</text>
+<text x="24" y="136" fill="#d0d7de" font-family="Consolas, monospace" font-size="15">    larName&quot;:&quot;&quot;,&quot;namespaced&quot;:true,&quot;kind&quot;:&quot;MetricValueList&quot;,&quot;verbs&quot;:[&quot;get&quot;]},{&quot;name&quot;:&quot;namespaces/http_requests_per_second&quot;,&quot;singularName&quot;:&quot;&quot;,&quot;namespace</text>
+<text x="24" y="158" fill="#d0d7de" font-family="Consolas, monospace" font-size="15">    d&quot;:false,&quot;kind&quot;:&quot;MetricValueList&quot;,&quot;verbs&quot;:[&quot;get&quot;]}]}</text>
+<text x="24" y="180" fill="#79c0ff" font-family="Consolas, monospace" font-size="15">Command: kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*/http_requests_per_second</text>
+<text x="24" y="202" fill="#d0d7de" font-family="Consolas, monospace" font-size="15">{&quot;kind&quot;:&quot;MetricValueList&quot;,&quot;apiVersion&quot;:&quot;custom.metrics.k8s.io/v1beta1&quot;,&quot;metadata&quot;:{},&quot;items&quot;:[{&quot;describedObject&quot;:{&quot;kind&quot;:&quot;Pod&quot;,&quot;namespace&quot;:&quot;default&quot;,&quot;</text>
+<text x="24" y="224" fill="#d0d7de" font-family="Consolas, monospace" font-size="15">    name&quot;:&quot;scaletestapp-5f87757967-7ftgp&quot;,&quot;apiVersion&quot;:&quot;/v1&quot;},&quot;metricName&quot;:&quot;http_requests_per_second&quot;,&quot;timestamp&quot;:&quot;2026-07-04T08:36:53Z&quot;,&quot;value&quot;:&quot;150m</text>
+<text x="24" y="246" fill="#d0d7de" font-family="Consolas, monospace" font-size="15">    &quot;,&quot;selector&quot;:null},{&quot;describedObject&quot;:{&quot;kind&quot;:&quot;Pod&quot;,&quot;namespace&quot;:&quot;default&quot;,&quot;name&quot;:&quot;scaletestapp-5f87757967-l9rd8&quot;,&quot;apiVersion&quot;:&quot;/v1&quot;},&quot;metricName&quot;:</text>
+<text x="24" y="268" fill="#d0d7de" font-family="Consolas, monospace" font-size="15">    &quot;http_requests_per_second&quot;,&quot;timestamp&quot;:&quot;2026-07-04T08:36:53Z&quot;,&quot;value&quot;:&quot;57m&quot;,&quot;selector&quot;:null}]}</text>
+<text x="24" y="290" fill="#79c0ff" font-family="Consolas, monospace" font-size="15">Command: kubectl get hpa scaletestapp-rps</text>
+<text x="24" y="312" fill="#a5d6a7" font-family="Consolas, monospace" font-size="15">NAME               REFERENCE                 TARGETS   MINPODS   MAXPODS   REPLICAS   AGE</text>
+<text x="24" y="334" fill="#d0d7de" font-family="Consolas, monospace" font-size="15">scaletestapp-rps   Deployment/scaletestapp   100m/1    1         10        2          10m</text>
+<text x="24" y="356" fill="#79c0ff" font-family="Consolas, monospace" font-size="15">Command: kubectl get deployment scaletestapp</text>
+<text x="24" y="378" fill="#a5d6a7" font-family="Consolas, monospace" font-size="15">scaletestapp   2/2     2            2           27m</text>
+<text x="24" y="400" fill="#79c0ff" font-family="Consolas, monospace" font-size="15">Command: kubectl get pods -o wide</text>
+<text x="24" y="422" fill="#a5d6a7" font-family="Consolas, monospace" font-size="15">scaletestapp-5f87757967-7ftgp   1/1     Running   0          25m     10.244.0.6    minikube   &lt;none&gt;           &lt;none&gt;</text>
+<text x="24" y="444" fill="#a5d6a7" font-family="Consolas, monospace" font-size="15">scaletestapp-5f87757967-l9rd8   1/1     Running   0          2m15s   10.244.0.10   minikube   &lt;none&gt;           &lt;none&gt;</text>
+<text x="24" y="466" fill="#79c0ff" font-family="Consolas, monospace" font-size="15">Command: kubectl describe hpa scaletestapp-rps</text>
+<text x="24" y="488" fill="#d0d7de" font-family="Consolas, monospace" font-size="15">Name:                                  scaletestapp-rps</text>
+<text x="24" y="510" fill="#d0d7de" font-family="Consolas, monospace" font-size="15">  &quot;http_requests_per_second&quot; on pods:  100m / 1</text>
+<text x="24" y="532" fill="#d0d7de" font-family="Consolas, monospace" font-size="15">Deployment pods:       2 current / 2 desired</text>
+<text x="24" y="554" fill="#a5d6a7" font-family="Consolas, monospace" font-size="15">  ScalingActive   True    ValidMetricFound     the HPA was able to successfully calculate a replica count from pods metric http_requests_per_second</text>
+<text x="24" y="576" fill="#ffd479" font-family="Consolas, monospace" font-size="15">  Warning  FailedComputeMetricsReplicas  7m46s (x12 over 10m)  horizontal-pod-autoscaler  invalid metrics (1 invalid out of 1), first error is: failed</text>
+<text x="24" y="598" fill="#d0d7de" font-family="Consolas, monospace" font-size="15">     to get pods metric value: unable to get metric http_requests_per_second: no metrics returned from custom metrics API</text>
+<text x="24" y="620" fill="#ffd479" font-family="Consolas, monospace" font-size="15">  Warning  FailedGetPodsMetric           5m30s (x21 over 10m)  horizontal-pod-autoscaler  unable to get metric http_requests_per_second: no metrics re</text>
+<text x="24" y="642" fill="#d0d7de" font-family="Consolas, monospace" font-size="15">    turned from custom metrics API</text>
+<text x="24" y="664" fill="#a5d6a7" font-family="Consolas, monospace" font-size="15">  Normal   SuccessfulRescale             2m15s                 horizontal-pod-autoscaler  New size: 2; reason: pods metric http_requests_per_second ab</text>
+<text x="24" y="686" fill="#d0d7de" font-family="Consolas, monospace" font-size="15">    ove target</text>
+</svg>

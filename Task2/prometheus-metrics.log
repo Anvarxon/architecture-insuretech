@@ -1,0 +1,22 @@
+=== Task2 Part2: Prometheus metrics scrape evidence ===
+Timestamp: 2026-07-04 13:37:19 +05:00
+
+Command: kubectl get pods -n monitoring
+NAME                                  READY   STATUS    RESTARTS   AGE
+prometheus-adapter-77b4657bbd-cgxh9   1/1     Running   0          3m19s
+prometheus-server-b99766c89-vkk5w     2/2     Running   0          27m
+
+Prometheus Web API: /api/v1/targets?state=active (filtered for scaletestapp)
+target=http://10.244.0.6:8080/metrics; health=up; job=kubernetes-pods; pod=scaletestapp-5f87757967-7ftgp; namespace=default
+target=http://10.244.0.10:8080/metrics; health=up; job=kubernetes-pods; pod=scaletestapp-5f87757967-l9rd8; namespace=default
+target=http://10.244.0.10:8080/metrics; health=up; job=kubernetes-service-endpoints; pod=; namespace=default
+target=http://10.244.0.6:8080/metrics; health=up; job=kubernetes-service-endpoints; pod=; namespace=default
+
+Prometheus query: http_requests_total
+metric=http_requests_total; namespace=default; pod=scaletestapp-5f87757967-7ftgp; service=; value=42569
+metric=http_requests_total; namespace=default; pod=scaletestapp-5f87757967-l9rd8; service=; value=15
+
+Prometheus query: sum(rate(http_requests_total[5m])) by (namespace,pod)
+metric=http_requests_per_second_source; namespace=default; pod=; value=0.2184858778884924 rps
+metric=http_requests_per_second_source; namespace=default; pod=scaletestapp-5f87757967-7ftgp; value=0.1500525183814335 rps
+metric=http_requests_per_second_source; namespace=default; pod=scaletestapp-5f87757967-l9rd8; value=0.0709679919979995 rps

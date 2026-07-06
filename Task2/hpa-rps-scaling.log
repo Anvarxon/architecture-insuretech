@@ -1,0 +1,37 @@
+=== Task2 Part2: HPA by RPS via Prometheus Adapter ===
+Timestamp: 2026-07-04 13:36:53 +05:00
+
+Command: kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1
+{"kind":"APIResourceList","apiVersion":"v1","groupVersion":"custom.metrics.k8s.io/v1beta1","resources":[{"name":"pods/http_requests_per_second","singularName":"","namespaced":true,"kind":"MetricValueList","verbs":["get"]},{"name":"namespaces/http_requests_per_second","singularName":"","namespaced":false,"kind":"MetricValueList","verbs":["get"]}]}
+
+Command: kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*/http_requests_per_second
+{"kind":"MetricValueList","apiVersion":"custom.metrics.k8s.io/v1beta1","metadata":{},"items":[{"describedObject":{"kind":"Pod","namespace":"default","name":"scaletestapp-5f87757967-7ftgp","apiVersion":"/v1"},"metricName":"http_requests_per_second","timestamp":"2026-07-04T08:36:53Z","value":"150m","selector":null},{"describedObject":{"kind":"Pod","namespace":"default","name":"scaletestapp-5f87757967-l9rd8","apiVersion":"/v1"},"metricName":"http_requests_per_second","timestamp":"2026-07-04T08:36:53Z","value":"57m","selector":null}]}
+
+Command: kubectl get hpa scaletestapp-rps
+NAME               REFERENCE                 TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
+scaletestapp-rps   Deployment/scaletestapp   100m/1    1         10        2          10m
+
+Command: kubectl get deployment scaletestapp
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+scaletestapp   2/2     2            2           27m
+
+Command: kubectl get pods -o wide
+NAME                            READY   STATUS    RESTARTS   AGE     IP            NODE       NOMINATED NODE   READINESS GATES
+scaletestapp-5f87757967-7ftgp   1/1     Running   0          25m     10.244.0.6    minikube   <none>           <none>
+scaletestapp-5f87757967-l9rd8   1/1     Running   0          2m15s   10.244.0.10   minikube   <none>           <none>
+
+Command: kubectl describe hpa scaletestapp-rps
+Name:                                  scaletestapp-rps
+Namespace:                             default
+Reference:                             Deployment/scaletestapp
+Metrics:                               ( current / target )
+  "http_requests_per_second" on pods:  100m / 1
+Min replicas:                          1
+Max replicas:                          10
+Deployment pods:       2 current / 2 desired
+Conditions:
+  AbleToScale     True    ScaleDownStabilized  recent recommendations were higher than current one, applying the highest recent recommendation
+  ScalingActive   True    ValidMetricFound     the HPA was able to successfully calculate a replica count from pods metric http_requests_per_second
+  ScalingLimited  False   DesiredWithinRange   the desired count is within the acceptable range
+Events:
+  Normal   SuccessfulRescale             2m15s                 horizontal-pod-autoscaler  New size: 2; reason: pods metric http_requests_per_second above target
